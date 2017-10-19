@@ -1,0 +1,13 @@
+Arduino    ----------->   	DHT
+5V								Vcc
+GND								GND
+6									Data
+
+Arduino    ----------->   	Relay
+7									NormalyClosed
+
+Arduino    ----------->   	ESP-01
+3.3V								Vcc
+GND								GND
+2									TX
+3									RX
