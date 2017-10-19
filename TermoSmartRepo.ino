@@ -1,4 +1,3 @@
-/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
 #include <ESP8266_Lib.h>
@@ -8,10 +7,15 @@ int temp_set = 15; //valori standard per inizializzare
 int temp_rec = 15;
 
 int activate = 7; //pin per triggerare relay
+int button_up = 8;
+int button_down = 9;
+
+bool go = true;
 
 BlynkTimer timer; //timer per processo 
 
 WidgetLED led(V3); //led virtuale Blynk
+WidgetLED led2(V4); //led virtuale Blynk
 
 // Auth Token
 char auth[] = "";
@@ -37,7 +41,8 @@ ESP8266 wifi(&EspSerial);
 //funzione che aggiorna il valore della variabile temp_set quando viene cambiata dall'app
 BLYNK_WRITE(V2)
 {
-  temp_set = temp_set + param.asFloat();  
+  temp_set = param.asFloat();  
+  Blynk.virtualWrite(V2, temp_set); //widget Blynk per temperature impostata
 }
 
 
@@ -54,19 +59,28 @@ void setup()
 
   Blynk.begin(auth, wifi, ssid, pass);
 
-  timer.setInterval(1000, core);
+  timer.setInterval(300, core);
 
   pinMode(activate, OUTPUT);
+  pinMode(button_up, INPUT);
+  pinMode(button_down, INPUT);
 }
 
 void loop()
 {
   Blynk.run();
   timer.run();
-  
 }
 
+
 void core(){
+
+  Blynk.virtualWrite(V1, temp_set); //widget Blynk per temperature impostata
+  if(go == true){
+    Blynk.virtualWrite(V2, temp_set);
+    go = false;
+  }
+  
   // aquisizione dati dht
   byte temperature = 0;
   byte humidity = 0;
@@ -77,7 +91,7 @@ void core(){
 
   temp_rec = (int)temperature; 
   Blynk.virtualWrite(V0, temp_rec); //widget Blynk per temperature registrata
-  Blynk.virtualWrite(V1, temp_set); //widget Blynk per temperature impostata
+  
   
   // funzione per attivare impianto 
   if(temp_set < temp_rec){
@@ -87,6 +101,18 @@ void core(){
     digitalWrite(activate, LOW);
     led.off(); 
   }
-  
-}
 
+   //funzione per bottoni fisici
+  if((digitalRead(button_up)) == HIGH){
+    temp_set = temp_set + 1;
+    Blynk.virtualWrite(V2, temp_set); //widget Blynk per temperature impostata
+    led2.on();
+    delay(100);
+  }
+  if((digitalRead(button_down)) == HIGH){
+    temp_set = temp_set - 1;
+    Blynk.virtualWrite(V2, temp_set); //widget Blynk per temperature impostata
+    led2.off();
+    delay(100);
+  }
+}
