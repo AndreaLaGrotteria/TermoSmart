@@ -386,11 +386,10 @@ UsedLibrary="/Users/Mattia/Documents/eagle/libraries/Eagle-Libraries-master/step
 UsedLibrary="/Users/Mattia/Documents/eagle/libraries/Eagle-Libraries-master/triac.lbr"
 UsedLibrary="/Users/Mattia/Documents/eagle/libraries/Eagle-Libraries-master/valves2.lbr"
 UsedLibrary="/Users/Mattia/Documents/eagle/libraries/Eagle-Libraries-master/varistor.lbr"
-UsedLibrary="/Users/Mattia/Downloads/diy-modules.lbr"
 
 [Win_1]
 Type="Control Panel"
-Loc="54 41 1253 680"
+Loc="80 64 1279 703"
 State=2
 Number=0
 
