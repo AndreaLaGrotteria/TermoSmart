@@ -7,10 +7,10 @@ int temp_set = 15; //valori standard per inizializzare
 int temp_rec = 15;
 
 int activate = 7; //pin per triggerare relay
-int button_up = 8;
-int button_down = 9;
+int button_up = 4;
+int button_down = 5;
 
-bool go = true;
+bool go = true; //solo per primo avvio, manda temperatura al widget
 
 BlynkTimer timer; //timer per processo 
 
@@ -27,6 +27,10 @@ char pass[] = "";
 // Software Serial
 #include <SoftwareSerial.h>
 SoftwareSerial EspSerial(3, 2); // RX, TX
+
+//LCD
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
 // DHT11
 #include <SimpleDHT.h>
@@ -64,6 +68,9 @@ void setup()
   pinMode(activate, OUTPUT);
   pinMode(button_up, INPUT);
   pinMode(button_down, INPUT);
+  
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
 }
 
 void loop()
@@ -76,6 +83,7 @@ void loop()
 void core(){
 
   Blynk.virtualWrite(V1, temp_set); //widget Blynk per temperature impostata
+  
   if(go == true){
     Blynk.virtualWrite(V2, temp_set);
     go = false;
@@ -91,7 +99,6 @@ void core(){
 
   temp_rec = (int)temperature; 
   Blynk.virtualWrite(V0, temp_rec); //widget Blynk per temperature registrata
-  
   
   // funzione per attivare impianto 
   if(temp_set < temp_rec){
@@ -115,4 +122,14 @@ void core(){
     led2.off();
     delay(100);
   }
+  
+  //Mostra Temperatura misurata sul display
+  lcd.setCursor(0, 0);
+  lcd.print("T registrata " + String(temp_rec));
+  
+  //Mostra Temperatura impostata sul display
+  lcd.setCursor(0, 1);
+  lcd.print("T impostata " + String(temp_set));
 }
+
+
