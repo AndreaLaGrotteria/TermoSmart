@@ -6,11 +6,13 @@
 int temp_set = 15; //valori standard per inizializzare
 int temp_rec = 15;
 
-int activate = 7; //pin per triggerare relay
+int activate = LED_BUILTIN; //pin per triggerare relay
 int button_up = 4;
 int button_down = 5;
 
 bool go = true; //solo per primo avvio, manda temperatura al widget
+
+unsigned long tempo = 0;
 
 BlynkTimer timer; //timer per processo 
 
@@ -90,23 +92,24 @@ void core(){
   }
   
   // aquisizione dati dht
-  byte temperature = 0;
-  byte humidity = 0;
-  byte data[40] = {0};
-  if (dht11.read(pinDHT11, &temperature, &humidity, data)) {
-    return;
+  if((millis() - tempo) > 1000){
+    // aquisizione dati dht
+    byte temperature = 0;
+    byte humidity = 0;
+    dht11.read(pinDHT11, &temperature, &humidity, NULL);
+    temp_rec = (int)temperature; 
+    tempo = millis();
   }
-
-  temp_rec = (int)temperature; 
+  
   Blynk.virtualWrite(V0, temp_rec); //widget Blynk per temperature registrata
   
   // funzione per attivare impianto 
   if(temp_set < temp_rec){
-    digitalWrite(activate, HIGH);
-    led.on(); //led virtuale su Blynk
-  } else{
     digitalWrite(activate, LOW);
-    led.off(); 
+    led.off(); //led virtuale su Blynk
+  } else{
+    digitalWrite(activate, HIGH);
+    led.on(); 
   }
 
    //funzione per bottoni fisici
@@ -129,7 +132,6 @@ void core(){
   
   //Mostra Temperatura impostata sul display
   lcd.setCursor(0, 1);
-  lcd.print("T impostata " + String(temp_set));
+  lcd.print("T impostata  " + String(temp_set));
 }
-
 
