@@ -663,8 +663,6 @@ design rules under a new name.</description>
 <signal name="VCC">
 <contactref element="B1" pad="VIN"/>
 <contactref element="U1" pad="VDD"/>
-<contactref element="U$1" pad="D2"/>
-<wire x1="72.39" y1="64.77" x2="85.09" y2="41.91" width="0" layer="19" extent="1-1"/>
 <wire x1="55.88" y1="6.35" x2="85.09" y2="41.91" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
@@ -679,13 +677,20 @@ design rules under a new name.</description>
 </signal>
 <signal name="TX">
 <contactref element="U$1" pad="A2"/>
-<contactref element="B1" pad="D2"/>
-<wire x1="72.39" y1="72.39" x2="68.58" y2="54.61" width="0" layer="19" extent="1-1"/>
+<contactref element="B1" pad="D3"/>
+<wire x1="72.39" y1="72.39" x2="66.04" y2="54.61" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="RX">
 <contactref element="U$1" pad="D1"/>
-<contactref element="B1" pad="D3"/>
-<wire x1="74.93" y1="64.77" x2="66.04" y2="54.61" width="0" layer="19" extent="1-1"/>
+<contactref element="B1" pad="D2"/>
+<wire x1="68.58" y1="54.61" x2="74.93" y2="64.77" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="3.3V">
+<contactref element="U$1" pad="D2"/>
+<contactref element="B1" pad="3.3V"/>
+<contactref element="U$1" pad="B2"/>
+<wire x1="72.39" y1="64.77" x2="72.39" y2="69.85" width="0" layer="19" extent="1-1"/>
+<wire x1="45.72" y1="6.35" x2="72.39" y2="64.77" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>
