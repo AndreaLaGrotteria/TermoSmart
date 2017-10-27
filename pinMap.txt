@@ -4,10 +4,14 @@ GND	                            GND
 6                                  Data
 
 Arduino    ----------->   	Relay
-7                                  NormalyClosed
+13                                  NormalyClosed
 
 Arduino    ----------->   	ESP-01
 3.3V	                            Vcc
 GND	                            GND
 3                                  TX
 2                                  RX
+
+Arduino    ----------->   	Display
+5V                                Vcc
+GND                             GND
