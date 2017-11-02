@@ -2657,7 +2657,7 @@ Shield form compatible with the Arduino Uno R3.
 <instance part="GND3" gate="1" x="106.68" y="104.14" rot="R270"/>
 <instance part="GND4" gate="1" x="48.26" y="106.68" rot="R270"/>
 <instance part="P+2" gate="VCC" x="104.14" y="134.62" rot="R90"/>
-<instance part="P+3" gate="VCC" x="48.26" y="121.92" rot="R90"/>
+<instance part="P+3" gate="VCC" x="35.56" y="119.38" rot="R90"/>
 <instance part="LCD1" gate="G$1" x="2.54" y="101.6" rot="R180"/>
 <instance part="GND5" gate="1" x="25.4" y="119.38" rot="R90"/>
 <instance part="GND6" gate="1" x="25.4" y="83.82" rot="R90"/>
@@ -2734,11 +2734,6 @@ Shield form compatible with the Arduino Uno R3.
 </net>
 <net name="VCC" class="0">
 <segment>
-<pinref part="P+3" gate="VCC" pin="VCC"/>
-<wire x1="50.8" y1="121.92" x2="58.42" y2="121.92" width="0.1524" layer="91"/>
-<pinref part="B1" gate="G$1" pin="VIN"/>
-</segment>
-<segment>
 <pinref part="P+2" gate="VCC" pin="VCC"/>
 <pinref part="U1" gate="G$1" pin="VDD"/>
 <wire x1="106.68" y1="134.62" x2="121.92" y2="134.62" width="0.1524" layer="91"/>
@@ -2763,6 +2758,11 @@ Shield form compatible with the Arduino Uno R3.
 <pinref part="S2" gate="S" pin="1"/>
 <wire x1="104.14" y1="165.1" x2="99.06" y2="165.1" width="0.1524" layer="91"/>
 <pinref part="P+7" gate="VCC" pin="VCC"/>
+</segment>
+<segment>
+<pinref part="P+3" gate="VCC" pin="VCC"/>
+<pinref part="B1" gate="G$1" pin="5V"/>
+<wire x1="38.1" y1="119.38" x2="58.42" y2="119.38" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -2818,6 +2818,14 @@ Shield form compatible with the Arduino Uno R3.
 <pinref part="U$1" gate="G$1" pin="CH_PD"/>
 <wire x1="116.84" y1="96.52" x2="114.3" y2="96.52" width="0.1524" layer="91"/>
 <label x="111.76" y="96.52" size="1.778" layer="95"/>
+</segment>
+<segment>
+<label x="50.8" y="83.82" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="B1" gate="G$1" pin="3.3V"/>
+<wire x1="58.42" y1="116.84" x2="48.26" y2="116.84" width="0.1524" layer="91"/>
+<label x="48.26" y="116.84" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$1" class="0">
