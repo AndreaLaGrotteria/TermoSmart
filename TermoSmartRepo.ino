@@ -3,8 +3,8 @@
 #include <ESP8266_Lib.h>
 #include <BlynkSimpleShieldEsp8266.h>
 
-int temp_set = 15; //valori standard per inizializzare
-int temp_rec = 15;
+float temp_set = 15; //valori standard per inizializzare
+float temp_rec = 15;
 
 int activate = LED_BUILTIN; //pin per triggerare relay
 int button_up = 4;
@@ -35,9 +35,13 @@ SoftwareSerial EspSerial(3, 2); // RX, TX
 LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
 // DHT11
-#include <SimpleDHT.h>
-int pinDHT11 = 6;
-SimpleDHT11 dht11;
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
+#include <DHT_U.h>
+#define DHTPIN 6
+#define DHTTYPE DHT11    
+DHT_Unified dht(DHTPIN, DHTTYPE);
+
 
 // ESP8266 baud rate:
 #define ESP8266_BAUD 9600
@@ -73,6 +77,12 @@ void setup()
   
   // set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
+
+  //DHT setup
+  dht.begin();
+  sensor_t sensor;
+  
+  delay(500);
 }
 
 void loop()
@@ -92,14 +102,9 @@ void core(){
   }
   
   // aquisizione dati dht
-  if((millis() - tempo) > 1000){
-    // aquisizione dati dht
-    byte temperature = 0;
-    byte humidity = 0;
-    dht11.read(pinDHT11, &temperature, &humidity, NULL);
-    temp_rec = (int)temperature; 
-    tempo = millis();
-  }
+  sensors_event_t event;  
+  dht.temperature().getEvent(&event);
+  temp_rec = event.temperature;
   
   Blynk.virtualWrite(V0, temp_rec); //widget Blynk per temperature registrata
   
@@ -128,10 +133,10 @@ void core(){
   
   //Mostra Temperatura misurata sul display
   lcd.setCursor(0, 0);
-  lcd.print("T registrata " + String(temp_rec));
+  lcd.print("T rec " + String(temp_rec));
   
   //Mostra Temperatura impostata sul display
   lcd.setCursor(0, 1);
-  lcd.print("T impostata  " + String(temp_set));
+  lcd.print("T set " + String(temp_set));
 }
 
