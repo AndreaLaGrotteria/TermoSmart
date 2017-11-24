@@ -20,11 +20,11 @@ WidgetLED led(V3); //led virtuale Blynk
 WidgetLED led2(V4); //led virtuale Blynk
 
 // Auth Token
-char auth[] = "";
+char auth[] = "0b60b39e8b234b9399148c68facee802";
 
 // WiFi
-char ssid[] = "";
-char pass[] = "";
+char ssid[] = "La Grotteria - Maina Network";
+char pass[] = "Giapi@0123456789";
 
 // Software Serial
 #include <SoftwareSerial.h>
@@ -39,7 +39,7 @@ LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 #include <DHT.h>
 #include <DHT_U.h>
 #define DHTPIN 6
-#define DHTTYPE DHT11    
+#define DHTTYPE DHT22    
 DHT_Unified dht(DHTPIN, DHTTYPE);
 
 
@@ -119,13 +119,13 @@ void core(){
 
    //funzione per bottoni fisici
   if((digitalRead(button_up)) == HIGH){
-    temp_set = temp_set + 1;
+    temp_set = temp_set + 0.5;
     Blynk.virtualWrite(V2, temp_set); //widget Blynk per temperature impostata
     led2.on();
     delay(100);
   }
   if((digitalRead(button_down)) == HIGH){
-    temp_set = temp_set - 1;
+    temp_set = temp_set - 0.5;
     Blynk.virtualWrite(V2, temp_set); //widget Blynk per temperature impostata
     led2.off();
     delay(100);
@@ -139,4 +139,3 @@ void core(){
   lcd.setCursor(0, 1);
   lcd.print("T set " + String(temp_set));
 }
-
