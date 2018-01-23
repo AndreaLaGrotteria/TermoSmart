@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Refresh" content="60"> 
+        <title>TermoSmart</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        
+    </head>
+    <body>
+
+        <header class="header">
+            <div class="header__inner">
+                <h1 class="header__title">
+                    TermoSmart
+                </h1>
+            </div>
+        </header>
+
+       <main>
+           <section class="content">
+               
+                    <form class="t__set" method="POST" action="/update/client">
+                        <span class="t__set__text t__set__cont">Set Temperature: </span><input type="number" step="0.5" name="set__value" class="value__setter" value="<%= temperatures[0].tSet %>"><span class="t__set__text t__set__cont"> C°</span>
+                        <!-- <input type="submit" value="Update"> -->
+                    </form>
+               
+
+               <section class="t__rec">
+                    <span class="t__rec__text t__rec__cont">Recorded Temperature: </span><span class="t__rec__value t__rec__cont">
+                        <% var i = 0; %>
+                        <% while(!(temperatures[i].tRec)){ %>
+                        <%   i++; %>
+                        <% } %>
+                        <%= temperatures[i].tRec %>
+                    </span><span class="t__rec__text t__rec__cont"> C°</span>
+               </section>
+
+               <section class="chart">
+                   <canvas id="t__chart"></canvas>
+               </section>
+
+               <script>
+                    var ctx = document.getElementById('t__chart').getContext('2d');
+
+                    var temperaturesSet = [];
+                    <% for(var i=0; i < temperatures.length; i+= 24){ %>
+                        temperaturesSet.push(<%= temperatures[i].tSet %>);
+                    <% } %>
+                    temperaturesSet.reverse();
+
+                    var temperaturesRec = [];
+                    <% for(var i=0; i < temperatures.length; i+= 24){ %>
+                        temperaturesRec.push(<%= temperatures[i].tRec %>);
+                        console.log(temperaturesRec);
+                    <% } %>
+                    temperaturesRec.reverse();
+
+                    var dates = [];
+                    <% for(var i=0; i < temperatures.length; i+= 24){ %>
+                        var h = <%= temperatures[i].dateAdded.getHours().toString() %> + 1;
+                        var m = <%= temperatures[i].dateAdded.getMinutes().toString() %>;
+                        var s = <%= temperatures[i].dateAdded.getSeconds().toString() %>;
+                        var time = h + ":" + m + ":" + s;
+                        dates.push(time);
+                    <% } %>
+                    dates.reverse();
+
+                    var chart = new Chart(ctx, {
+                        // The type of chart we want to create
+                        type: 'line',
+        
+                        // The data for our dataset
+                        data: {
+                            //labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+                            labels: dates,
+                            datasets: [{
+                                label: "Recorded Temperature",
+                            
+                                borderColor: 'rgb(255, 99, 132)',
+                                data: temperaturesRec,
+                            }, {
+                                label: "Set Temperature",
+                                
+                                borderColor: 'rgb(128,128,0)',
+                                data: temperaturesSet,
+                            }]
+                        },
+        
+                        // Configuration options go here
+                        options: {}
+                    });
+                </script>
+
+               <!-- <section class="calendar">
+                
+               </section> /-->
+               
+           </section>
+       </main> 
+    </body>
+</html>

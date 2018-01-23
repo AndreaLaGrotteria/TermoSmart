@@ -1,0 +1,119 @@
+.content {
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+body, 
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0; 
+}
+
+header, nav, footer, section, article, div {
+    box-sizing: border-box;
+}
+
+.header__inner {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.header__title {
+    font-weight: 300;
+    font-size: 4em;
+    margin: 0.5em 0.5em;
+    display: inline-block;
+    color: #212121;
+
+}
+
+main {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.t__rec__cont, .t__set__cont, .value__setter{
+    font-size: 1.5em;
+    
+}
+
+.t__set, .t__rec, .chart, .calendar{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    padding: 2em;
+} 
+
+.value__setter{
+    width: 3.5em;
+    text-align: center;
+}
+
+@media screen and (max-width: 359px){
+    .t__set__cont, .t__rec__cont, .value__setter{
+        font-size: 1.3em;
+
+    }
+
+    .t__rec, .t__set{
+        padding: 1.3em;
+    }
+
+    .header__title{
+        font-size: 2em;
+    }
+}
+
+@media screen and (min-width: 360px) and (max-width: 729px){
+    .t__set{
+        padding: 2em;
+    }
+
+    .t__rec{
+        padding: 2em;
+    }
+} 
+
+@media screen and (min-width: 450px) and (max-width: 799px){
+    main{
+        width: 450px;
+    }
+}
+
+@media screen and (min-width: 800px){
+    .t__set{
+        order: 0;
+        width: 43%;
+    }
+
+    .t__rec{
+        width: 50%;
+        order: 1;
+    }
+
+    .chart{
+        /*width: 50%; */
+        order: 2;
+    }
+
+    .calendar{
+        /*width:50%;*/
+        order: 3;
+    }
+}
+
+@media screen and (min-width: 850px){
+    main, .header__inner{
+        width: 850px;
+    }
+}
